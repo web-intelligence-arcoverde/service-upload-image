@@ -38,15 +38,18 @@ services:
     container_name: adonis-app
     build:
       context: .
+      args:
+        NODE_ENV: "${NODE_ENV}"
     depends_on:
       - postgres
     env_file:
       - .env
     ports:
       - "${EXTERNAL_APP_PORT}:${CONTAINER_APP_PORT}"
-    working_dir: /app/
+    working_dir: /opt/app/
     volumes:
-      - ./:/app
+      - .:/opt/app
+      - ./node_modules:/opt/app/node_modules
     networks:
       - production-network
 
