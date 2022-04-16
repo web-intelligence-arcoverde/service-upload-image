@@ -1,19 +1,15 @@
-FROM node:alpine
-
-RUN apk update && apk add bash
+FROM node:14
 
 WORKDIR /opt/app
-COPY package*.json /opt/app/
 
-ARG NODE_ENV
-RUN if [ "$NODE_ENV" = "development" ]; \
-    then npm install --frozen-lockfile; \
-    else npm install --only=production; \
-    fi
+COPY package*.json ./
 
 RUN npm i -g @adonisjs/cli && npm i @adonisjs/ignitor
+RUN npm i -g nodemon -D
+RUN npm install
 
-COPY . /opt/app/
+COPY . .
+
 EXPOSE 3000
 
 CMD ["npm","start"]
