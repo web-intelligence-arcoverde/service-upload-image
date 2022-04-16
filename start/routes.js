@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-const Route = use("Route");
+const Route = use('Route');
 
-Route.get("/", () => {
-  return { greeting: "realtime update" };
+Route.get('/', () => {
+  return {greeting: 'realtime update'};
 });

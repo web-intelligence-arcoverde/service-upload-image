@@ -7,8 +7,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "test": "node ace test",
-    "dev": "adonis serve --dev",
-    "format": "prettier ./.prettierrc --write ./**/*.js"
+    "dev": "adonis serve --dev"
   },
   "keywords": [
     "adonisjs",
@@ -30,9 +29,5 @@
   },
   "autoload": {
     "App": "./app"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15",
-    "prettier": "^2.6.2"
   }
 }
