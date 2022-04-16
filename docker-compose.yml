@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4:6.0
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "${PGA_LOGIN:-admin@test.com}"
+      PGADMIN_DEFAULT_PASSWORD: "${PGA_PASS:-secret}"
+      PGADMIN_LISTEN_PORT: "${CONTAINER_PGA_PORT:-8000}"
+    ports:
+      - "${EXTERNAL_PGA_PORT:-8000}:${CONTAINER_PGA_PORT:-8000}"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - production-network
+
+  postgres:
+    container_name: adonis-db
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: "${PG_DB_NAME:-postgres}"
+      POSTGRES_USER: "${PG_USER:-postgres}"
+      POSTGRES_PASSWORD: "${PG_PASSWORD:-postgres}"
+    ports:
+      - "${EXTERNAL_DB_PORT}:${CONTAINER_DB_PORT}"
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - production-network
+
+  app:
+    container_name: adonis-app
+    build:
+      context: .
+    depends_on:
+      - postgres
+    ports:
+      - "${EXTERNAL_APP_PORT}:${CONTAINER_APP_PORT}"
+    working_dir: /app/
+    volumes:
+      - ./:/app
+    networks:
+      - production-network
+
+volumes:
+  db:
+  pgadmin-data:
+
+networks:
+  production-network:
+    driver: bridge
