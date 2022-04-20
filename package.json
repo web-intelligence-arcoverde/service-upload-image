@@ -5,9 +5,10 @@
   "description": "Adonisjs boilerplate for API server with pre-configured JWT",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "adonis serve --dev",
     "test": "node ace test",
-    "dev": "adonis serve --dev"
+    "dev": "adonis serve --dev",
+    "format": "prettier ./.prettierrc --write ./**/*.js"
   },
   "keywords": [
     "adonisjs",
@@ -29,5 +30,9 @@
   },
   "autoload": {
     "App": "./app"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "prettier": "^2.6.2"
   }
 }
